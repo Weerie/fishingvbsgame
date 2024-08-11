@@ -172,3 +172,4 @@ function Show-Leaderboard {
 # Run the form
 $form.Add_Shown({ $form.Activate() })
 [System.Windows.Forms.Application]::Run($form)
+
