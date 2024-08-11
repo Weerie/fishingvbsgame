@@ -1,9 +1,19 @@
-' Advanced interactive fishing game script with trash tracking
+' Advanced interactive fishing game script with simulated animation
 
 ' Function to display a message box and return the user's choice
 Function ShowMessage(message, buttons, title)
     ShowMessage = MsgBox(message, buttons, title)
 End Function
+
+' Function to simulate animation
+Sub SimulateAnimation()
+    Dim animationStages, i
+    animationStages = Array("Casting your line...", "Waiting for a bite...", "Feeling a tug...", "Reeling in the catch!")
+    For i = 0 To UBound(animationStages)
+        ShowMessage animationStages(i), vbInformation, "Fishing Animation"
+        WScript.Sleep 1000 ' Pause for 1 second between stages
+    Next
+End Sub
 
 ' Welcome message
 ShowMessage "Welcome to the Ultimate Fishing Adventure! Cast your line and see what you catch!", vbOkOnly + vbInformation, "Fishing Adventure"
@@ -26,6 +36,9 @@ While fishing And attempts < maxAttempts
     castLine = ShowMessage("Attempt " & attempts & ": Do you want to cast your line and try to catch a fish?", vbYesNo + vbQuestion, "Fishing Attempt " & attempts)
     
     If castLine = vbYes Then
+        ' Simulate fishing animation
+        SimulateAnimation
+        
         ' Random chance of catching a fish or junk
         catchOutcome = Int((13 * Rnd) + 1) ' Random number between 1 and 13
 
