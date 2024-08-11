@@ -1,4 +1,4 @@
-' Interactive fishing game script
+' Advanced interactive fishing game script with trash tracking
 
 ' Function to display a message box and return the user's choice
 Function ShowMessage(message, buttons, title)
@@ -6,14 +6,16 @@ Function ShowMessage(message, buttons, title)
 End Function
 
 ' Welcome message
-ShowMessage "Welcome to the Great Fishing Adventure! Ready to catch some fish?", vbOkOnly + vbInformation, "Fishing Adventure"
+ShowMessage "Welcome to the Ultimate Fishing Adventure! Cast your line and see what you catch!", vbOkOnly + vbInformation, "Fishing Adventure"
 
 ' Fishing game variables
-Dim fishing, catchOutcome, fishType, attempts, maxAttempts, fishCount
+Dim fishing, catchOutcome, fishType, attempts, maxAttempts, fishCount, trashCount, score
 fishing = True
 attempts = 0
-maxAttempts = 5 ' Maximum number of fishing attempts
+maxAttempts = 10 ' Maximum number of fishing attempts
 fishCount = 0
+trashCount = 0
+score = 0
 
 ' Fishing loop
 While fishing And attempts < maxAttempts
@@ -24,26 +26,73 @@ While fishing And attempts < maxAttempts
     castLine = ShowMessage("Attempt " & attempts & ": Do you want to cast your line and try to catch a fish?", vbYesNo + vbQuestion, "Fishing Attempt " & attempts)
     
     If castLine = vbYes Then
-        ' Random chance of catching a fish
-        catchOutcome = Int((5 * Rnd) + 1) ' Random number between 1 and 5
+        ' Random chance of catching a fish or junk
+        catchOutcome = Int((13 * Rnd) + 1) ' Random number between 1 and 13
 
         Select Case catchOutcome
+            ' Common Fish
             Case 1
-                fishType = "a big Bass! Great catch!"
+                fishType = "a small Perch. (Common)"
                 fishCount = fishCount + 1
+                score = score + 10
             Case 2
-                fishType = "a slippery Trout. Nice!"
+                fishType = "a Sunfish. (Common)"
                 fishCount = fishCount + 1
+                score = score + 10
+            
+            ' Uncommon Fish
             Case 3
-                fishType = "a rare Golden Fish! What luck!"
+                fishType = "a Pike. (Uncommon)"
                 fishCount = fishCount + 1
+                score = score + 20
             Case 4
-                fishType = "an old boot. Better luck next time!"
+                fishType = "a Carp. (Uncommon)"
+                fishCount = fishCount + 1
+                score = score + 20
+            
+            ' Rare Fish
             Case 5
-                fishType = "nothing. The fish are wise today."
+                fishType = "a Rainbow Trout. (Rare)"
+                fishCount = fishCount + 1
+                score = score + 50
+            Case 6
+                fishType = "a Bluegill. (Rare)"
+                fishCount = fishCount + 1
+                score = score + 50
+
+            ' Legendary Fish
+            Case 7
+                fishType = "a Legendary Golden Fish! (Legendary)"
+                fishCount = fishCount + 1
+                score = score + 100
+            Case 8
+                fishType = "a Mythical Kraken Tentacle! (Legendary)"
+                fishCount = fishCount + 1
+                score = score + 100
+
+            ' Junk Items
+            Case 9
+                fishType = "an old boot. Better luck next time!"
+                trashCount = trashCount + 1
+            Case 10
+                fishType = "a rusty can. It's not your day!"
+                trashCount = trashCount + 1
+            Case 11
+                fishType = "a tangle of seaweed. Maybe tomorrow!"
+                trashCount = trashCount + 1
+            Case 12
+                fishType = "a sunken treasure map! (Oops, it's unreadable.)"
+                trashCount = trashCount + 1
+            Case 13
+                fishType = "a broken fishing rod. Time for a new one!"
+                trashCount = trashCount + 1
         End Select
         
+        ' Show the fishing result
         ShowMessage "You caught " & fishType, vbInformation, "Catch Result"
+        
+        ' Show the updated score and trash count
+        ShowMessage "Current Score: " & score & " points" & vbCrLf & "Total Fish Caught: " & fishCount & vbCrLf & "Total Trash Collected: " & trashCount, vbInformation, "Score and Trash Update"
     Else
         fishing = False
         ShowMessage "You've decided to stop fishing early. Hope you enjoyed the adventure!", vbInformation, "Fishing Ended"
@@ -52,8 +101,8 @@ Wend
 
 ' End of game summary
 If fishing Then
-    ShowMessage "You've used all your attempts. Total fish caught: " & fishCount & ".", vbInformation, "Fishing Complete"
+    ShowMessage "You've used all your attempts. Final Score: " & score & " points" & vbCrLf & "Total Fish Caught: " & fishCount & vbCrLf & "Total Trash Collected: " & trashCount & ".", vbInformation, "Fishing Complete"
 End If
 
 ' Farewell message
-ShowMessage "Thanks for playing the Great Fishing Adventure! Come back soon.", vbOkOnly + vbInformation, "Goodbye"
+ShowMessage "Thanks for playing the Ultimate Fishing Adventure! Come back soon to try for a bigger haul.", vbOkOnly + vbInformation, "Goodbye"
